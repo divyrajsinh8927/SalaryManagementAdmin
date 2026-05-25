@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Admin extends Model
+{
+    use HasFactory, Notifiable;
+    protected $table = 'tbl_admins';
+    public $timestamps = false;
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'phone',
+        'login_token',
+        'last_login',
+        'last_login_ip',
+        'is_active',
+        'is_delete',
+        'deleted_by',
+        'deleted_by_uid',
+        'created_date',
+        'updated_date',
+    ];
+}

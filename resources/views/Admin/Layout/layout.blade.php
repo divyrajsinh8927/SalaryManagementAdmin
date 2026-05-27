@@ -1,22 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Salary Management System')</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body class="bg-light">
+@include('Admin.Layout.header')
+<div class="absolute w-full bg-blue-500 dark:hidden min-h-75"></div>
+@include('Admin.Layout.sidebar')
 
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-            <span class="navbar-brand mb-0 h1">Salary Admin</span>
-        </div>
-    </nav>
-
-    <div class="container mt-4">
-        @yield('content')
-    </div>
-
-</body>
-</html>
+<main class="relative h-full max-h-screen transition-all duration-200 ease-in-out xl:ml-68 rounded-xl">
+    @include('Admin.Layout.navbar')
+    @yield('content')
+</main>
+@include('Admin.Layout.themebar')
+@include('Admin.Layout.footer')

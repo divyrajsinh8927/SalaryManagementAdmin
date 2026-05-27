@@ -14,7 +14,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'SalaryManagementSystem'),
-    'admin_url' => env('APP_ADMIN_URL', 'http://localhost/SalaryManagementAdmin'),
+    'admin_url' => env('APP_ADMIN_URL', 'http://localhost/SalaryManagementAdmin/'),
+    'asset_url' => env('APP_ASSET_URL', 'http://localhost/SalaryManagementAdmin/public/'),
 
     /*
     |--------------------------------------------------------------------------

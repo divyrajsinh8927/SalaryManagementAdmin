@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\Auth;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Dashboard;
 
 Route::prefix('admin')->group(function () {
     // Admin Dashboard Route
+    Route::get('/login', [Auth::class, 'login'])->name('admin.login');
+    Route::post('/verify_login', [Auth::class, 'verifyLogin'])->name('admin.verify_login');
     Route::get('/', [Dashboard::class, 'index'])->name('admin.dashboard');
     // Add more admin routes here as needed
 });

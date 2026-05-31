@@ -26,4 +26,5 @@ class Admin extends Model
         'created_date',
         'updated_date',
     ];
+
 }

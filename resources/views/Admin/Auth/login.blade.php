@@ -37,7 +37,7 @@
                             </div>
                         </div>
                         <div
-                            class="flex flex-col w-full max-w-full px-3 mx-auto lg:mx-0 shrink-0 md:flex-0 md:w-7/12 lg:w-5/12 xl:w-4/12 pt-6">
+                            class="flex flex-col w-full max-w-full px-3 mx-auto lg:mx-0 shrink-0 md:flex-0 sm:w-full lg:w-1/2 pt-6">
                             <div
                                 class="relative flex flex-col min-w-0 break-words bg-transparent border-0 shadow-none lg:py4 rounded-2xl bg-clip-border">
                                 <div class="p-6 pb-0 mb-0">
@@ -82,10 +82,9 @@
                                 </div>
                                 <div
                                     class="border-black/12.5 rounded-b-2xl border-t-0 border-solid p-6 text-center pt-0 px-1 sm:px-6">
-                                    <p class="mx-auto mb-6 leading-normal text-sm">Don't have an account? <a
-                                            href="../pages/sign-up.html"
-                                            class="font-semibold text-transparent bg-clip-text bg-gradient-to-tl from-blue-500 to-violet-500">Sign
-                                            up</a></p>
+                                    <p class="mx-auto mb-6 leading-normal text-sm">Don't remember your password? <a
+                                            href="../pages/forgot-password.html"
+                                            class="font-semibold text-transparent bg-clip-text bg-gradient-to-tl from-blue-500 to-violet-500">Forgot Password</a></p>
                                 </div>
                             </div>
                         </div>

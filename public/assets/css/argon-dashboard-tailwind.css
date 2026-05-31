@@ -1272,9 +1272,9 @@ h6 {
   min-height: 1.5rem;
 }
 
-.min-h-screen {
+/* .min-h-screen {
   min-height: 100vh;
-}
+} */
 
 .min-h-50-screen {
   min-height: 50vh;

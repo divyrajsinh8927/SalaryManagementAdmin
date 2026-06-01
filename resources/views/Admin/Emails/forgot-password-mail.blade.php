@@ -31,7 +31,7 @@
                         <td bgcolor="#ffffff" align="left" style="padding: 40px 30px 40px 30px;">
                             
                             <h2 style="margin: 0; color: #32325d; font-size: 22px; font-weight: 600; line-height: 32px; margin-bottom: 20px; font-family: sans-serif;">
-                                Reset Password Request
+                                Let's Reset Your Password
                             </h2>
                             
                             <p style="margin: 0; color: #525f7f; font-size: 16px; line-height: 26px; margin-bottom: 20px; font-family: sans-serif;">
@@ -39,21 +39,25 @@
                             </p>
                             
                             <p style="margin: 0; color: #525f7f; font-size: 16px; line-height: 26px; margin-bottom: 30px; font-family: sans-serif;">
-                                We received a request to reset the password for your account. No changes have been made yet. You can reset your password by clicking the secure button below:
+                                We received a request to reset the password for your account. Click the button below to choose a new password.
                             </p>
 
                             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 30px;">
                                 <tr>
                                     <td align="center">
-                                        <a href="{{ url('admin/reset_password?' . $token . '&mail=' . $mail) }}" target="_blank" style="background-color: #5e72e4; color: #ffffff; display: inline-block; font-size: 14px; font-weight: 600; line-height: 48px; text-align: center; text-decoration: none; width: 220px; border-radius: 4px; text-transform: uppercase; letter-spacing: 1px; font-family: sans-serif;">
+                                        <a href="{{ url('admin/reset_password?token=' . $token . '&mail=' . $mail) }}" target="_blank" style="background-color: #5e72e4; color: #ffffff; display: inline-block; font-size: 14px; font-weight: 600; line-height: 48px; text-align: center; text-decoration: none; width: 220px; border-radius: 4px; text-transform: uppercase; letter-spacing: 1px; font-family: sans-serif;">
                                             Reset Password
                                         </a>
                                     </td>
                                 </tr>
                             </table>
 
+                           <p style="margin: 0; color: #525f7f; font-size: 14px; line-height: 24px; font-family: sans-serif; margin-bottom: 12px;">
+                                If you didn't make this request, you can ignore this email—your account and password will remain unchanged.
+                            </p>
+
                             <p style="margin: 0; color: #8898aa; font-size: 14px; line-height: 24px; font-family: sans-serif;">
-                                If you did not request a password reset, you can safely ignore this email. This link will expire in 60 minutes.
+                                &#128274; For your security, this link will expire in 60 minutes.
                             </p>
 
                         </td>

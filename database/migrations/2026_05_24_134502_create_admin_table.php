@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('last_login_ip')->nullable();
             $table->enum('role', ['admin', 'sub_admin'])->default('sub_admin');
             $table->boolean('is_active')->default(true);
+            $table->string('reset_password_token')->nullable();
+            $table->timestamp('reset_password_token_expiry')->nullable();
             $table->boolean('is_delete')->default(false);
             $table->string('deleted_by')->nullable();
             $table->string('deleted_by_uid')->nullable();

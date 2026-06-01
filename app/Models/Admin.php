@@ -25,6 +25,8 @@ class Admin extends Model
         'deleted_by_uid',
         'created_date',
         'updated_date',
+        'reset_password_token',
+        'reset_password_token_expiry',
     ];
 
 }

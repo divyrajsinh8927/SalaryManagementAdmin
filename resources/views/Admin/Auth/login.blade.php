@@ -86,7 +86,8 @@
                                             in</button>
                                     </div>
                                     <p class="mx-auto mb-6 leading-normal text-sm mt-6">Don't remember your password? <a
-                                            href="../pages/forgot-password.html"
+                                            href="javascript:;"
+                                            id="forgot_password"
                                             class="font-semibold text-transparent bg-clip-text bg-gradient-to-tl from-blue-500 to-violet-500">Forgot
                                             Password</a></p>
                                     </p>
@@ -195,6 +196,30 @@
                     $('#errorMessage').removeClass('hidden');
                 }
             });
+        });
+
+        $('#forgot_password').on('click', function() {
+            const email = $('#email').val();
+            if (!email) {
+                $('#emailError').text("Please enter your email to reset password").removeClass('hidden');
+            } else {
+                $.ajax({
+                    url: "{{ route('admin.forgot_password') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    type: 'POST',
+                    data: {
+                        email: email
+                    },
+                    success: function(response) {
+                        // Handle successful password reset request
+                    },
+                    error: function(error) {
+                        // Handle error
+                    }
+                });
+            }
         });
     });
 </script>

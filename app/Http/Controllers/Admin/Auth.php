@@ -1,9 +1,12 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
+use App\Mail\ForgotPasswordMail;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class Auth extends Controller
 {
@@ -81,5 +84,44 @@ class Auth extends Controller
         Session()->flush();
         cookie()->queue(cookie()->forget('admin_data'));
         return redirect()->route('admin.login');
+    }
+
+    public function ForgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $email = $request->input('email');
+        $user = Admin::where('email', $email)->where('is_delete', false)->first();
+
+        if (!$user) {
+            return response()->json([
+                'status' => 2,
+                'message' => "There is no account associated with this email.",
+            ]);
+        }
+
+        $token = Str::random(16);
+
+        $user->reset_password_token = $token;
+        $user->reset_password_token_expiry = date('Y-m-d H:i:s', strtotime('+60 minutes'));
+        $user->save();
+
+        dd($user->email);
+        try {
+            Mail::to($user->email)->send(new ForgotPasswordMail($user->name, $token, config('app.name'), $user->email));
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 0,
+                'message' => "Forgot password email could not be sent. Please try again later.",
+                'error' => $e->getMessage(),
+            ]);
+        }
+
+        return response()->json([
+            'status' => 1,
+            'message' => "Password reset link has been sent to your email.",
+        ]);
     }
 }

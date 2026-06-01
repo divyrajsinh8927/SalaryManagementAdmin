@@ -10,6 +10,7 @@ Route::prefix('admin')->middleware(['Auth'])->group(function () {
     Route::get('/login', [Auth::class, 'login'])->name('admin.login');
     Route::post('/verify_login', [Auth::class, 'verifyLogin'])->name('admin.verify_login');
     Route::get('/logout', [Auth::class, 'logout'])->name('admin.logout');
+    Route::post('/forgot_password', [Auth::class, 'forgotPassword'])->name('admin.forgot_password');
 
     // Admin Dashboard Route
     Route::get('/', [Dashboard::class, 'index'])->name('admin.dashboard');

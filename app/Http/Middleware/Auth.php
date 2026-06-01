@@ -15,13 +15,14 @@ class Auth
      */
     public function handle(Request $request, Closure $next): Response
     {
+        $non_loginRoutes = ['admin.login', 'admin.verify_login', 'admin.forgot_password'];
         $routeName = $request->route()->getName();
-// dd(Session()->get('is_login') ? 'Logged In' : 'Not Logged In');
-        if (!Session()->get('is_login') && $routeName !== 'admin.login' && $routeName !== 'admin.verify_login') {
+        if (!Session()->get('is_login') && !in_array($routeName, $non_loginRoutes)) {
             return redirect()->route('admin.login');
         } else {
            
-            if (Session()->get('is_login') && ($routeName === 'admin.login' || $routeName === 'admin.verify_login')) {
+
+            if (Session()->get('is_login') && in_array($routeName, $non_loginRoutes)) {
                 return redirect()->route('admin.dashboard');
             }
 

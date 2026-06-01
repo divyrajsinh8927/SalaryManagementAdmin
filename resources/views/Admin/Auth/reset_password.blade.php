@@ -34,29 +34,27 @@
                 <div class="container z-10">
                     <div class="flex flex-wrap justify-center -mx-3">
                         <div class="w-full max-w-full px-3 mx-auto mt-0 text-center lg:flex-0 shrink-0 lg:w-5/12">
-                            <h1 class="mt-12 mb-2 text-white">Welcome!</h1>
-                            <p class="text-white">Use your email and password to access your account.</p>
+                            <h1 class="mt-12 mb-2 text-white">@if(!empty($msg)) Link Expired @else Welcome! @endif</h1>
+                            <p class="text-white">@if(!empty($msg)) {{ $msg }} 
+                                <a href="{{ route('admin.login') }}">Sign In</a>
+                                
+                                @else Use your email and password to access your account. @endif</p>
                         </div>
                     </div>
                 </div>
             </div>
+            @if (empty($msg))
             <div class="container">
                 <div class="flex flex-wrap -mx-3 -mt-48 md:-mt-56 lg:-mt-48">
                     <div class="w-full max-w-full px-3 mx-auto mt-0 md:flex-0 shrink-0 md:w-7/12 lg:w-5/12 xl:w-4/12">
                         <div
                             class="relative z-0 flex flex-col min-w-0 break-words bg-white border-0 shadow-xl rounded-2xl bg-clip-border">
                             <div class="p-6 mb-0 text-center bg-white border-b-0 rounded-t-2xl">
-                                <h5>Sign in</h5>
+                                <h5>Reset Password</h5>
                             </div>
                             <div class="flex-auto p-6">
-                                <form role="form text-left" id="loginForm">
-                                    <div class="mb-4">
-                                        <input type="email" name="email" id="email"
-                                            class="placeholder:text-gray-500 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
-                                            placeholder="Email" aria-label="Email" aria-describedby="email-addon" />
-                                        <p class="tw-text-[14px] font-bold text-red-500 ms-1 hidden" id="emailError">
-                                        </p>
-                                    </div>
+                                <form role="form text-left" id="resetPasswordForm">
+                                    
                                     <div class="mb-4">
                                         <input type="password" name="password" id="password"
                                             class="placeholder:text-gray-500 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
@@ -65,14 +63,15 @@
                                         <p class="tw-text-[14px] font-bold text-red-500 ms-1 hidden" id="passwordError">
                                         </p>
                                     </div>
-                                    <div class="flex items-center pl-12 mb-0.5 text-left min-h-6">
-                                        <input id="rememberMe" name="remember_me"
-                                            class="mt-0.5 rounded-10 duration-250 ease-in-out after:rounded-circle after:shadow-2xl after:duration-250 checked:after:translate-x-5.3 h-5 relative float-left -ml-12 w-10 cursor-pointer appearance-none border border-solid border-gray-200 bg-zinc-700/10 bg-none bg-contain bg-left bg-no-repeat align-top transition-all after:absolute after:top-px after:h-4 after:w-4 after:translate-x-px after:bg-white after:content-[''] checked:border-blue-500/95 checked:bg-theme-blue-500/95 checked:bg-none checked:bg-right"
-                                            type="checkbox" />
-                                        <label
-                                            class="ml-2 font-normal cursor-pointer select-none text-sm text-slate-700"
-                                            for="rememberMe">Remember me</label>
+                                    <div class="mb-4">
+                                        <input type="password" name="confirm_password" id="confirm_password"
+                                            class="placeholder:text-gray-500 text-sm focus:shadow-primary-outline leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 px-3 font-normal text-gray-700 transition-all focus:border-blue-500 focus:bg-white focus:text-gray-700 focus:outline-none focus:transition-shadow"
+                                            placeholder="Confirm Password" aria-label="Confirm Password"
+                                            aria-describedby="password_confirmation-addon" />
+                                        <p class="tw-text-[14px] font-bold text-red-500 ms-1 hidden" id="passwordConfirmationError">
+                                        </p>
                                     </div>
+
                                     <!-- Error Message -->
                                     <div id="errorMessage"
                                         class=" flex items-center gap-3 rounded-lg border border-red-200 bg-transparent px-2 py-2 mt-4 hidden">
@@ -88,21 +87,16 @@
                                     </div>
                                     <div class="text-center">
                                         <button type="submit"
-                                            class="inline-block w-full px-16 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-blue-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">Sign
-                                            in</button>
+                                            class="inline-block w-full px-16 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-blue-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">Reset
+                                            Password</button>
                                     </div>
-                                    <p class="mx-auto mb-6 leading-normal text-sm mt-6">Don't remember your password? <a
-                                            href="javascript:;"
-                                            id="forgot_password"
-                                            class="font-semibold text-transparent bg-clip-text bg-gradient-to-tl from-blue-500 to-violet-500">Forgot
-                                            Password</a></p>
-                                    </p>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            @endif
         </section>
         <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
         <footer class="py-12">
@@ -160,9 +154,13 @@
 <script>
     $(document).ready(function() {
         // Intercept the form submit event
-        $('#loginForm').on('submit', function(event) {
+        $('#resetPasswordForm').on('submit', function(event) {
             event.preventDefault();
-
+            
+            $('#confirm_password').removeClass('tw-border-red-500');
+            $('#password').removeClass('tw-border-red-500');
+            $('#passwordConfirmationError').text("").addClass('hidden');
+            $('#passwordError').text("").addClass('hidden');
             const formDataSerialized = $(this).serializeArray();
 
             const formDataObject = {};
@@ -171,10 +169,26 @@
                 formDataObject[field.name] = field.value;
             });
 
-            formDataObject['remember_me'] = $('#rememberMe').is(':checked');
+            if(formDataObject.password.length < 6) {
+                $('#passwordError').text("Password must be at least 6 characters long.").removeClass('hidden');
+                $('#password').addClass('tw-border-red-500');
+                // $('#password').removeClass('border-gray-300');
+                return;
+            }else if(formDataObject.password !== formDataObject.confirm_password) {
+                $('#passwordConfirmationError').text("Password confirmation does not match.").removeClass('hidden');
+                $('#confirm_password').addClass('tw-border-red-500');
+                $('#password').addClass('tw-border-red-500');
+                // $('#confirm_password').removeClass('border-gray-300');
+                // $('#password').removeClass('border-gray-300');
+                return;
+            }else {
+                $('#passwordConfirmationError').text("").addClass('hidden');
+            }
 
+            formDataObject.token = "{{ $token }}";
+            formDataObject.mail = "{{ $mail }}";
             $.ajax({
-                url: "{{ route('admin.verify_login') }}",
+                url: "{{ route('admin.reset_password') }}",
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
@@ -187,10 +201,6 @@
                     $('#errorMessage').addClass('hidden');
                     if (response.status === 1) {
                         window.location.href = "{{ route('admin.dashboard') }}";
-                    } else if (response.status === 2) {
-                        $('#emailError').text(response.message).removeClass('hidden');
-                    } else if (response.status === 3) {
-                        $('#passwordError').text(response.message).removeClass('hidden');
                     } else {
                         $('#errorMessage p').text(response.message);
                         $('#errorMessage').removeClass('hidden');
@@ -204,35 +214,6 @@
             });
         });
 
-        $('#forgot_password').on('click', function() {
-            const email = $('#email').val();
-            if (!email) {
-                $('#emailError').text("Please enter your email to reset password").removeClass('hidden');
-            } else {
-                $.ajax({
-                    url: "{{ route('admin.forgot_password') }}",
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    type: 'POST',
-                    data: {
-                        email: email
-                    },
-                    success: function(response) {
-                        if(response.status === 1) {
-                            $('#successMessage p').text(response.message);
-                            $('#successMessage').removeClass('hidden');
-                        }else if(response.status !== 1) {
-                            $('#errorMessage p').text(response.message);
-                            $('#errorMessage').removeClass('hidden');
-                        }
-                    },
-                    error: function(error) {
-                        // Handle error
-                    }
-                });
-            }
-        });
     });
 </script>
 <!-- plugin for scrollbar  -->

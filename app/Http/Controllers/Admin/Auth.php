@@ -1,19 +1,18 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Mail\ForgotPasswordMail;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class Auth extends Controller
 {
-    public function __construct()
-    {
-        
-    }
+    public function __construct() {}
 
     public function login(Request $request)
     {
@@ -31,17 +30,17 @@ class Auth extends Controller
 
         $email = $request->input('email');
         $password = $request->input('password');
-        $rememberMe = $request->has('remember_me'); 
+        $rememberMe = $request->has('remember_me');
 
         $admin = Admin::where('email', $email)->where('is_delete', false)->first();
-        if(empty($admin)){
+        if (empty($admin)) {
             $status = 2;
             $msg = "There is no account associated with this email.";
-        }else{
-            if(!password_verify($password, $admin->password)){
+        } else {
+            if (!password_verify($password, $admin->password)) {
                 $status = 3;
                 $msg = "Invalid Password.";
-            }else{
+            } else {
                 Session()->put('is_login', true);
                 Session()->put('admin_id', $admin->id);
                 Session()->put('admin_name', $admin->name);
@@ -50,7 +49,7 @@ class Auth extends Controller
 
                 $data = [
                     'last_login' => date('Y-m-d H:i:s'), // Converts to '2026-05-31 16:59:07'
-                    'last_login_ip' => (string) $request->ip() ?? null , // Ensures it passes as a clean string
+                    'last_login_ip' => (string) $request->ip() ?? null, // Ensures it passes as a clean string
                 ];
                 Admin::where('id', $admin->id)->update($data);
 
@@ -70,7 +69,7 @@ class Auth extends Controller
                 }
             }
         }
-       
+
 
         // For demonstration, we'll just return the received data
         return response()->json([
@@ -93,9 +92,9 @@ class Auth extends Controller
         ]);
 
         $email = $request->input('email');
-        $user = Admin::where('email', $email)->where('is_delete', false)->first();
+        $admin = Admin::where('email', $email)->where('is_delete', false)->first();
 
-        if (!$user) {
+        if (!$admin) {
             return response()->json([
                 'status' => 2,
                 'message' => "There is no account associated with this email.",
@@ -104,13 +103,13 @@ class Auth extends Controller
 
         $token = Str::random(16);
 
-        $user->reset_password_token = $token;
-        $user->reset_password_token_expiry = date('Y-m-d H:i:s', strtotime('+60 minutes'));
-        $user->save();
+        $admin->reset_password_token = $token;
+        $admin->reset_password_token_expiry = date('Y-m-d H:i:s', strtotime('+60 minutes'));
+        $admin->save();
 
-        dd($user->email);
+
         try {
-            Mail::to($user->email)->send(new ForgotPasswordMail($user->name, $token, config('app.name'), $user->email));
+            Mail::to($admin->email)->send(new ForgotPasswordMail($admin->name, $token, config('app.name'), $admin->email));
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 0,
@@ -123,5 +122,61 @@ class Auth extends Controller
             'status' => 1,
             'message' => "Password reset link has been sent to your email.",
         ]);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        if ($request->isMethod('get')) {
+            $token = $request->query('token');
+            $mail = $request->query('mail');
+
+            $admin = Admin::where('reset_password_token', $token)->where('email', $mail)->first();
+
+            $msg = "";
+            if (!$admin || $admin->reset_password_token_expiry < date('Y-m-d H:i:s')) {
+                $msg = "This reset password link is expired. Please request a new one.";
+            }
+
+            return view('admin.auth.reset_password', ['token' => $token, 'mail' => $mail, 'msg' => $msg]);
+        } else if ($request->isMethod('post')) {
+            $request->validate([
+                'token' => 'required',
+                'password' => 'required|min:6',
+            ]);
+
+            $token = $request->input('token');
+            $password = $request->input('password');
+
+            $admin = Admin::where('reset_password_token', $token)
+                ->where('reset_password_token_expiry', '>', date('Y-m-d H:i:s'))
+                ->where('is_delete', false)
+                ->first();
+
+            if (!$admin) {
+                return response()->json([
+                    'status' => 2,
+                    'message' => "Invalid or expired token.",
+                ]);
+            }
+
+            $admin->password = Hash::make($password);
+            $admin->updated_date = now();
+            $admin->reset_password_token = null;
+            $admin->reset_password_token_expiry = null;
+            $admin->last_login = date('Y-m-d H:i:s');
+            $admin->last_login_ip = (string) $request->ip() ?? null;
+            $admin->save();
+
+            Session()->put('is_login', true);
+            Session()->put('admin_id', $admin->id);
+            Session()->put('admin_name', $admin->name);
+            Session()->put('admin_email', $admin->email);
+            Session()->put('admin_role', $admin->role);
+
+            return response()->json([
+                'status' => 1,
+                'message' => "Your password has been reset successfully.",
+            ]);
+        }
     }
 }

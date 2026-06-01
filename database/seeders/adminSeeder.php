@@ -16,7 +16,7 @@ class adminSeeder extends Seeder
     {
         DB::table('tbl_admin')->insert([
             'name' => 'Master Admin',
-            'email' => 'admin@yopmail.com',
+            'email' => 'masteradmin@yopmail.com',
             'password' => Hash::make('123'), // Securely hashes your password
             'role' => 'admin',               // Matches your enum value
             'login_token' => null,

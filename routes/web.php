@@ -11,6 +11,8 @@ Route::prefix('admin')->middleware(['Auth'])->group(function () {
     Route::post('/verify_login', [Auth::class, 'verifyLogin'])->name('admin.verify_login');
     Route::get('/logout', [Auth::class, 'logout'])->name('admin.logout');
     Route::post('/forgot_password', [Auth::class, 'forgotPassword'])->name('admin.forgot_password');
+    Route::get('/reset_password', [Auth::class, 'resetPassword'])->name('admin.reset_password_view');
+    Route::post('/reset_password', [Auth::class, 'resetPassword'])->name('admin.reset_password');
 
     // Admin Dashboard Route
     Route::get('/', [Dashboard::class, 'index'])->name('admin.dashboard');

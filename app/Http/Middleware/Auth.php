@@ -15,7 +15,7 @@ class Auth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $non_loginRoutes = ['admin.login', 'admin.verify_login', 'admin.forgot_password'];
+        $non_loginRoutes = ['admin.login', 'admin.verify_login', 'admin.forgot_password', 'admin.reset_password_view', 'admin.reset_password'];
         $routeName = $request->route()->getName();
         if (!Session()->get('is_login') && !in_array($routeName, $non_loginRoutes)) {
             return redirect()->route('admin.login');
